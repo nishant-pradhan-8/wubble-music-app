@@ -16,6 +16,4 @@ app.use("/music", express.static(path.join(__dirname, "public/track")));
 
 app.use("/api/track", trackRouter);
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+module.exports = app;

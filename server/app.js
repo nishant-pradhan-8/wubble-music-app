@@ -6,7 +6,7 @@ const trackRouter = require("./routes/tracks");
 const PORT = 8000;
 
 const corsOptions = {
-  origin: "*",
+  origin: "https://wubble-music-application.vercel.app",
   optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));

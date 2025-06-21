@@ -4,9 +4,10 @@ const cors = require("cors");
 const path = require("path");
 const trackRouter = require("./routes/tracks");
 const PORT = 8000;
+
 const corsOptions = {
-  origin: '*',
-  optionsSuccessStatus: 200
+  origin: "*",
+  optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
 app.use(express.json());

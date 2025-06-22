@@ -23,7 +23,6 @@ Wubble QuickTune Mini is a single-page full-stack web app that lets users genera
 
 ### ✨ Bonus Features
 - Dark mode toggle
-- Animated track card using Tailwind + Framer Motion
 - LocalStorage persistence for favorites and recent
 - Smooth transitions and responsive UI
 
@@ -46,8 +45,8 @@ Wubble QuickTune Mini is a single-page full-stack web app that lets users genera
 
 ## 🗂 Folder Structure
 wubble-project/
-├── frontend/ # React app
-└── backend/ # Express API
+├── client/ # React app
+└── server/ # Express API
 
 --
 
@@ -58,11 +57,12 @@ wubble-project/
 cd frontend
 npm install
 npm run dev
-
+```
 
 ### Backend (Express)
 ```bash
 cd backend
 npm install
-node app.js
+npm run dev
+```
 

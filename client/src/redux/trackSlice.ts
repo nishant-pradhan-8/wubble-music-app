@@ -29,11 +29,17 @@ const trackSlice = createSlice({
     },
     setCurrentTrack: (state, action) => {
       state.currentTrack = { ...action.payload };
-    
-      if (state.recentTracks.length === 0 || state.recentTracks[0]?.title !== action.payload.title) {
+
+      if (
+        state.recentTracks.length === 0 ||
+        state.recentTracks[0]?.title !== action.payload.title
+      ) {
         state.recentTracks.unshift(action.payload);
         state.recentTracks = state.recentTracks.slice(0, 5);
-        localStorage.setItem("recentTracks", JSON.stringify(state.recentTracks));
+        localStorage.setItem(
+          "recentTracks",
+          JSON.stringify(state.recentTracks)
+        );
       }
     },
     setLikedTracks: (state, action) => {

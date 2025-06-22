@@ -16,6 +16,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import { Box, Slider, Button, Stack } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { setLikedTracks } from "../redux/trackSlice";
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(3),
@@ -43,29 +44,26 @@ export default function MusicPlayerDialog({
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const { currentTrack, likedTracks } = useAppSelector((state) => state.track);
 
-  // Check if current track is liked when it changes
   React.useEffect(() => {
     if (currentTrack) {
-      const isTrackLiked = likedTracks.some(track => track.title === currentTrack.title);
+      const isTrackLiked = likedTracks.some(
+        (track) => track.title === currentTrack.title
+      );
       setIsLiked(isTrackLiked);
     }
   }, [currentTrack, likedTracks]);
 
- const handlePlayPause = async () => {
-  if (audioRef.current) {
-    if (isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(false);
-    } else {
-
+  const handlePlayPause = async () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      } else {
         await audioRef.current.play();
         setIsPlaying(true);
-     
-      
+      }
     }
-  }
-};
-
+  };
 
   const handleTimeUpdate = () => {
     if (audioRef.current) {
@@ -95,43 +93,42 @@ export default function MusicPlayerDialog({
     if (audioRef.current) {
       if (moveTo === "start") {
         audioRef.current.currentTime = 0;
-      }else if(moveTo==="end"){
+      } else if (moveTo === "end") {
         audioRef.current.currentTime = duration;
       }
     }
   };
-const handleDownload = async () => {
-  if (!currentTrack?.file || !currentTrack?.title) {
-    window.alert("No file available for download.");
-    return;
-  }
 
-  try {
-    const response = await fetch(currentTrack.file, {
-      mode: "cors",
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch file");
+  const handleDownload = async () => {
+    if (!currentTrack?.file || !currentTrack?.title) {
+      window.alert("No file available for download.");
+      return;
     }
 
-    const blob = await response.blob();
-    const blobUrl = URL.createObjectURL(blob);
+    try {
+      const response = await fetch(currentTrack.file, {
+        mode: "cors",
+      });
 
-    const link = document.createElement("a");
-    link.href = blobUrl;
-    link.download = `${currentTrack.title}.mp3`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+      if (!response.ok) {
+        throw new Error("Failed to fetch file");
+      }
 
-    URL.revokeObjectURL(blobUrl);
-  } catch (error) {
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
 
-    window.alert("Something went wrong while downloading the file.");
-  }
-};
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = `${currentTrack.title}.mp3`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
 
+      URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      window.alert("Something went wrong while downloading the file.");
+    }
+  };
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
@@ -165,18 +162,17 @@ const handleDownload = async () => {
         <IconButton
           aria-label="close"
           onClick={handleClose}
-          sx={(theme) => ({
+          sx={{
             position: "absolute",
             right: 8,
             top: 8,
-            color: theme.palette.grey[500],
-          })}
+          }}
         >
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
           <Box sx={{ textAlign: "center", mb: 3 }}>
-            {/* Album Art Placeholder */}
+      
             <Box
               sx={{
                 width: 200,
@@ -195,17 +191,17 @@ const handleDownload = async () => {
               </Typography>
             </Box>
 
-            {/* Song Info */}
             <Typography variant="h6" gutterBottom>
               {currentTrack?.title || "Song Title"}
             </Typography>
             <Typography variant="body2" color="text.secondary" gutterBottom>
-              <span className="font-bold">Genre:</span> {currentTrack?.genre || "Genre"} |   <span className="font-bold">Mood:</span> {currentTrack?.mood || "Mood"}
+              <span className="font-bold">Genre:</span>{" "}
+              {currentTrack?.genre || "Genre"} |{" "}
+              <span className="font-bold">Mood:</span>{" "}
+              {currentTrack?.mood || "Mood"}
             </Typography>
-           
           </Box>
 
-          {/* Audio Player */}
           <audio
             ref={audioRef}
             onTimeUpdate={handleTimeUpdate}
@@ -217,13 +213,12 @@ const handleDownload = async () => {
             Your browser does not support the audio element.
           </audio>
 
-          {/* Progress Bar */}
           <Box sx={{ mb: 2 }}>
             <Slider
               value={currentTime}
               max={duration}
               onChange={handleSeek}
-              sx={{ color: "primary.main" }}
+              sx={{ color: "#f0c929" }}
             />
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Typography variant="caption" color="text.secondary">
@@ -234,8 +229,6 @@ const handleDownload = async () => {
               </Typography>
             </Box>
           </Box>
-
-          {/* Control Buttons */}
           <Box
             sx={{
               display: "flex",
@@ -251,9 +244,9 @@ const handleDownload = async () => {
               size="large"
               onClick={handlePlayPause}
               sx={{
-                backgroundColor: "primary.main",
-                color: "white",
-                "&:hover": { backgroundColor: "primary.dark" },
+                backgroundColor: "#f0c929",
+                color: "black",
+                "&:hover": { backgroundColor: "#d4b324" },
                 mx: 2,
               }}
             >
@@ -264,7 +257,6 @@ const handleDownload = async () => {
             </IconButton>
           </Box>
 
-          {/* Action Buttons */}
           <Stack direction="row" spacing={2} justifyContent="center">
             <Button
               variant="outlined"

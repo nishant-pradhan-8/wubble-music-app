@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -24,9 +25,8 @@ a:hover {
 }
 
 body {
-  background-color: #181818;
   margin: 0;
-  display: flex;
+
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
@@ -38,11 +38,9 @@ h1 {
   line-height: 1.1;
 }
 
-#root{
-  @apply w-full;
+#root {
+  @apply w-full h-full;
 }
-
-
 
 @media (prefers-color-scheme: light) {
   :root {

@@ -73,13 +73,5 @@ This document outlines potential future enhancements, scaling strategies, and te
 
 ---
 
-## 💡 Bonus Ideas
-
-- **Drag & Drop Audio Tagging Tool for Admins**
-- **Daily Featured Track**
-- **Drag & Drop Audio Tagging Tool for Admins**
-
----
-
 This project is built as a demo prototype for assessment, but these improvements can make it production-ready with real-time media experiences.
 

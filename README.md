@@ -54,14 +54,14 @@ wubble-project/
 
 ### Frontend (React)
 ```bash
-cd frontend
+cd client
 npm install
 npm run dev
 ```
 
 ### Backend (Express)
 ```bash
-cd backend
+cd server
 npm install
 npm run dev
 ```

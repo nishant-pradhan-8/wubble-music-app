@@ -20,7 +20,7 @@ import { setLikedTracks } from "../redux/trackSlice";
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(3),
-    minWidth: 400,
+    minWidth: 250,
   },
   "& .MuiDialogActions-root": {
     padding: theme.spacing(1),
@@ -41,6 +41,7 @@ export default function MusicPlayerDialog({
   const [isLiked, setIsLiked] = React.useState(false);
   const [currentTime, setCurrentTime] = React.useState(0);
   const [duration, setDuration] = React.useState(0);
+  const [isDownloading, setIsDownloading] = React.useState(false);
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const { currentTrack, likedTracks } = useAppSelector((state) => state.track);
 
@@ -105,6 +106,7 @@ export default function MusicPlayerDialog({
       return;
     }
 
+    setIsDownloading(true);
     try {
       const response = await fetch(currentTrack.file, {
         mode: "cors",
@@ -127,6 +129,8 @@ export default function MusicPlayerDialog({
       URL.revokeObjectURL(blobUrl);
     } catch (error) {
       window.alert("Something went wrong while downloading the file.");
+    } finally {
+      setIsDownloading(false);
     }
   };
 
@@ -257,7 +261,18 @@ export default function MusicPlayerDialog({
             </IconButton>
           </Box>
 
-          <Stack direction="row" spacing={2} justifyContent="center">
+          <Stack 
+            direction={{ xs: 'column', sm: 'row' }} 
+            spacing={{ xs: 1, sm: 2 }} 
+            justifyContent="center"
+            sx={{ 
+              width: '100%',
+              '@media (max-width: 375px)': {
+                direction: 'column',
+                spacing: 1
+              }
+            }}
+          >
             <Button
               variant="outlined"
               startIcon={
@@ -272,11 +287,13 @@ export default function MusicPlayerDialog({
               {isLiked ? "Liked" : "Like"}
             </Button>
             <Button
+            className="px-2"
               variant="outlined"
+              disabled={isDownloading}
               startIcon={<DownloadIcon />}
               onClick={handleDownload}
             >
-              Download
+              {isDownloading ? "Downloading..." : "Download"}
             </Button>
           </Stack>
         </DialogContent>
